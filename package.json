@@ -1,0 +1,18 @@
+{
+  "name": "webtransport-readable-never-ends",
+  "version": "1.0.0",
+  "description": "A WebTransport server/client with a stream that never ends",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "browser": "node browser.js"
+  },
+  "dependencies": {
+    "@fails-components/webtransport": "^1.0.10",
+    "@fails-components/webtransport-transport-http3-quiche": "^1.0.10",
+    "@peculiar/x509": "^1.9.7",
+    "multiformats": "^13.1.0",
+    "uint8arrays": "^5.0.2"
+  }
+}
