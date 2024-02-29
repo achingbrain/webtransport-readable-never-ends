@@ -7,13 +7,13 @@ const ONE_DAY_MS = 86400000
 
 x509.cryptoProvider.set(crypto)
 
-async function generateWebTransportCertificate (name, keyPair, options) {
+async function generateWebTransportCertificate (keyPair, options) {
   const notBefore = options.start ?? new Date()
   const notAfter = new Date(notBefore.getTime() + (options.days * ONE_DAY_MS))
 
   const cert = await x509.X509CertificateGenerator.createSelfSigned({
     serialNumber: (BigInt(Math.random().toString().replace('.', '')) * 100000n).toString(16),
-    name,
+    name: 'cert',
     notBefore,
     notAfter,
     signingAlgorithm: {
@@ -44,17 +44,13 @@ async function generateWebTransportCertificate (name, keyPair, options) {
   }
 }
 
-export async function generateWebTransportCertificates (attrs, options = []) {
+export async function generateWebTransportCertificates (options = []) {
   const keyPair = await crypto.subtle.generateKey({
     name: 'ECDSA',
     namedCurve: 'P-256'
   }, true, ['sign', 'verify'])
 
-  const name = attrs.reduce((acc, curr) => {
-    return `${acc} ${curr.shortName}=${curr.value}`
-  }, '').trim()
-
   return Promise.all(
-    options.map(async opts => generateWebTransportCertificate(name, keyPair, opts))
+    options.map(async opts => generateWebTransportCertificate(keyPair, opts))
   )
 }

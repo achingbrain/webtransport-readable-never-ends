@@ -2,13 +2,7 @@ import { Http3Server } from '@fails-components/webtransport'
 import { generateWebTransportCertificates } from './certificate.js'
 
 export async function server () {
-  const certificates = await generateWebTransportCertificates([
-    { shortName: 'C', value: 'DE' },
-    { shortName: 'ST', value: 'Berlin' },
-    { shortName: 'L', value: 'Berlin' },
-    { shortName: 'O', value: 'webtransport Test Server' },
-    { shortName: 'CN', value: '127.0.0.1' }
-  ], [{
+  const certificates = await generateWebTransportCertificates([{
     // can be max 14 days according to the spec
     days: 13
   }])
