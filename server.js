@@ -52,15 +52,27 @@ export async function server () {
                 break
               }
 
-              const stream = result.value
+              console.info('SERVER new incoming bidi stream')
 
+              const stream = result.value
               const writer = stream.writable.getWriter()
-              await writer.write(Uint8Array.from([0, 1, 2, 3]))
+
+              console.info('SERVER await writable ready')
+              await writer.ready
+
+              // n.b the WebTransport spec recommends not awaiting the promise
+              // returned from .write - https://www.w3.org/TR/webtransport/#example-sending-stream
+              console.info('SERVER write to writable')
+              writer.write(Uint8Array.from([0, 1, 2, 3])).catch(err => {
+                console.info('error writing to stream', err)
+              })
+
               console.info('SERVER close writeable')
               await writer.close()
+              console.info('SERVER closed writeable')
             }
           } catch (err) {
-            console.error('error waiting for session to become ready', err)
+            console.error('SERVER session error', err)
           }
         })
       }
