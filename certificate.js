@@ -1,10 +1,11 @@
 import * as x509 from '@peculiar/x509'
 import { sha256 } from 'multiformats/hashes/sha2'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
+import crypto from 'node:crypto'
 
 const ONE_DAY_MS = 86400000
 
-x509.cryptoProvider.set(globalThis.crypto)
+x509.cryptoProvider.set(crypto)
 
 async function generateWebTransportCertificate (name, keyPair, options) {
   const notBefore = options.start ?? new Date()
