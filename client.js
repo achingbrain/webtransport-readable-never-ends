@@ -6,6 +6,7 @@ export async function client ({ address, serverCertificateHashes }) {
     serverCertificateHashes
   })
 
+  console.info('CLIENT wait for session ready')
   await transport.ready
   console.info('CLIENT session ready')
 
@@ -23,5 +24,7 @@ export async function client ({ address, serverCertificateHashes }) {
       console.info('CLIENT read stream finished')
       break
     }
+
+    console.info('CLIENT got value', res.value)
   }
 }

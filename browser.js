@@ -14,6 +14,7 @@ Paste the following code into https://codepen.io or simmilar:
     }`)}]
   })
 
+  console.info('CLIENT wait for session ready')
   await transport.ready
   console.info('CLIENT session ready')
 
@@ -31,6 +32,8 @@ Paste the following code into https://codepen.io or simmilar:
       console.info('CLIENT read stream finished')
       break
     }
+
+    console.info('CLIENT got value', res.value)
   }
 })()
 `)
